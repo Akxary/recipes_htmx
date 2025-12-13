@@ -21,3 +21,9 @@ pytest = "^9.0.2"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+python_version = "3.11"
+check_untyped_defs = true
+explicit_package_bases = true
+plugins = ['pydantic.mypy', 'sqlalchemy.ext.mypy.plugin']

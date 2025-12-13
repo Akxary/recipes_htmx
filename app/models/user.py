@@ -21,9 +21,9 @@ class User(Base, CreatedAtMixin, TechIdMixin):
         comment="Код подтверждения входа",
     )
     verification_time: Mapped[datetime] = MappedColumn(
-        TIMESTAMP,
+        TIMESTAMP(timezone=True),
         nullable=False,
-        server_default="2000-01-01 00:00:00.000",
+        server_default="2000-01-01 00:00:00.000+00:00",
         comment="Время отправка кода подтверждения",
     )
     

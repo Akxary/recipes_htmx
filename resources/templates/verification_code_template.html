@@ -1,0 +1,33 @@
+{% extends 'base_template.html' %}
+{% block page_body %}
+<div id="auth-message" class="alert alert-success">
+            <h4>✓ Код отправлен!</h4>
+            <p>Код подтверждения отправлен на <strong>{{ user_email }}</strong></p>
+            
+            <form hx-post="/auth/check-verification-code" 
+                  hx-target="#auth-message"
+                  hx-swap="outerHTML"
+                  class="mt-3">
+                <div class="form-group">
+                    <label>Введите код из письма:</label>
+                    <input type="text" 
+                           name="verification_code" 
+                           class="form-control" 
+                           required
+                           pattern="[0-9]{6}"
+                           title="6-значный код">
+                    <input type="hidden" name="user_email" value="{{ user_email }}">
+                </div>
+                <button type="submit" class="btn btn-success mt-2">
+                    Подтвердить
+                </button>
+            </form>
+            
+            <button hx-get="/auth" 
+                    hx-target="closest .container"
+                    hx-swap="innerHTML"
+                    class="btn btn-link mt-2">
+                ← Использовать другой email
+            </button>
+        </div>
+{% endblock  %}

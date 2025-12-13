@@ -15,7 +15,7 @@ class TechIdMixin:
 
 class UpdatedAtMixin:
     updated_at: Mapped[datetime] = MappedColumn(
-        TIMESTAMP,
+        TIMESTAMP(timezone=True),
         nullable=False,
         onupdate=current_timestamp(),
         comment="Время последнего обновления записи",
@@ -24,7 +24,7 @@ class UpdatedAtMixin:
 
 class CreatedAtMixin:
     created_at: Mapped[datetime] = MappedColumn(
-        TIMESTAMP,
+        TIMESTAMP(timezone=True),
         nullable=False,
         server_default=current_timestamp(),
         comment="Время создания записи",

@@ -1,8 +1,8 @@
-"""create user
+"""added user
 
-Revision ID: 72aaa88abdd2
+Revision ID: a2fd4ec0072b
 Revises: 
-Create Date: 2025-12-13 20:09:07.113339
+Create Date: 2025-12-13 23:23:39.834667
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '72aaa88abdd2'
+revision: str = 'a2fd4ec0072b'
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -24,8 +24,8 @@ def upgrade() -> None:
     op.create_table('users',
     sa.Column('user_email', sa.String(), nullable=False, comment='email пользователя'),
     sa.Column('verification_code', sa.Integer(), server_default='0', nullable=False, comment='Код подтверждения входа'),
-    sa.Column('verification_time', sa.TIMESTAMP(), server_default='2000-01-01 00:00:00.000', nullable=False, comment='Время отправка кода подтверждения'),
-    sa.Column('created_at', sa.TIMESTAMP(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=False, comment='Время создания записи'),
+    sa.Column('verification_time', sa.TIMESTAMP(timezone=True), server_default='2000-01-01 00:00:00.000+00:00', nullable=False, comment='Время отправка кода подтверждения'),
+    sa.Column('created_at', sa.TIMESTAMP(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=False, comment='Время создания записи'),
     sa.Column('tech_id', sa.Integer(), autoincrement=True, nullable=False, comment='Технический ИД таблицы'),
     sa.PrimaryKeyConstraint('tech_id')
     )

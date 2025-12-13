@@ -9,7 +9,9 @@ from resources.config import A_DB_URL, DB_URL
 logger = logging.getLogger(__name__)
 a_engine = create_async_engine(A_DB_URL)
 engine = create_engine(DB_URL)
-async_session = async_sessionmaker(a_engine, class_=AsyncSession, expire_on_commit=False)
+async_session = async_sessionmaker(
+    a_engine, class_=AsyncSession, expire_on_commit=False
+)
 
 
 class Base(DeclarativeBase):
