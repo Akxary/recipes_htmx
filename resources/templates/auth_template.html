@@ -1,0 +1,8 @@
+{% extends 'base_template.html' %}
+{% block page_body %}
+<form hx-post="/auth/get-verification-code" hx-target="#auth-message" hx-swap="outerHTML">
+    <input type="email" name="user-name" placeholder="email" required>
+    <button type="submit">Отправить код подтверждения</button>
+</form>
+<div id="auth-message"></div>
+{% endblock %}
