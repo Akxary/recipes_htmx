@@ -37,7 +37,7 @@ async def get_auth_page(
     if user_email is not None:
         user_manager = UserManager(user_email, session)
         send_code_limit = await user_manager.check_send_code_limit()
-        if send_code_limit>get_current_time():
+        if send_code_limit > get_current_time():
             context["expire_time"] = send_code_limit.timestamp()
     return templates.TemplateResponse(
         request=request,

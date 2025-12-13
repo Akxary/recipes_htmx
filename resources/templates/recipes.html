@@ -1,0 +1,13 @@
+{% extends 'base_template.html' %}
+{% block page_body %}
+<h2>Список всех рецептов:</h2>
+<ul>
+{% for recipe in all_recipes %}
+    <li>
+        <p>Автор: {{ recipe.user.user_email }}</p>
+        <p>Рецепт: {{ recipe.description }}</p>
+        <p>Дата создания: {{ recipe.created_at }}</p>
+    </li>
+{% endfor %}
+</ul>
+{% endblock  %}

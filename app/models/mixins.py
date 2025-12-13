@@ -18,6 +18,7 @@ class UpdatedAtMixin:
         TIMESTAMP(timezone=True),
         nullable=False,
         onupdate=current_timestamp(),
+        server_default=current_timestamp(),
         comment="Время последнего обновления записи",
     )
 
