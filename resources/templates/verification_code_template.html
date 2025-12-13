@@ -15,19 +15,48 @@
                            class="form-control" 
                            required
                            pattern="[0-9]{6}"
-                           title="6-значный код">
+                           title="6-значный код"
+                           {% if verification_code %}value="{{ verification_code }}"{% endif %}
+                        >
                     <input type="hidden" name="user_email" value="{{ user_email }}">
+                    <input type="hidden" name="expire_time" value="{{ expire_time }}">
                 </div>
+                {% if error_code %}<p>{{ error_code }}</p>{% endif %}
                 <button type="submit" class="btn btn-success mt-2">
                     Подтвердить
                 </button>
+                <div class="timer-container mt-3">
+                    <p>Код действителен в течение:</p>
+                    <div id="timer"
+                        class="text-danger fw-bold fs-4">
+                        05:00
+                    </div>
+                </div>
+
             </form>
             
-            <button hx-get="/auth" 
-                    hx-target="closest .container"
+            <button
+                    hx-get="/auth?user_email={{ user_email }}" 
+                    hx-target="#auth-message"
                     hx-swap="innerHTML"
                     class="btn btn-link mt-2">
-                ← Использовать другой email
+                ← Отправить код повторно
             </button>
         </div>
+        <script>
+            function expireCodeCallback() {
+                const timerElement = document.getElementById("timer");
+                timerElement.innerHTML = "Время истекло"
+            }
+            // Запускаем таймер
+            updateTimer("timer", {{ expire_time }}, expireCodeCallback);
+            if (!window.timerInterval) {
+                let timerInterval;
+            }
+            timerInterval = setInterval(updateTimer, 1000, "timer",{{ expire_time }}, expireCodeCallback);
+            // Очистка при обновлении контента
+            document.getElementById('auth-message').addEventListener('htmx:beforeSwap', function() {
+                clearInterval(timerInterval);
+            });
+        </script>
 {% endblock  %}

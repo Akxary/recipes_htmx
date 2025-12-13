@@ -2,8 +2,35 @@
 {% block page_body %}
 <div id="auth-message">
 <form hx-post="/auth/get-verification-code" hx-target="#auth-message" hx-swap="innerHTML">
-    <input type="email" name="user_email" placeholder="email" required>
-    <button type="submit">Отправить код подтверждения</button>
+    <input type="email" name="user_email" placeholder="email" required {% if user_email %}value="{{ user_email }}"{% endif %}>
+    <button id="submit-send-verification-code" type="submit" {% if (expire_time) %}disabled{% endif %}>Отправить код подтверждения</button>
 </form>
+{% if (expire_time) %}
+<div id="timer-container" class="timer-container mt-3">
+    <p>Повторно код можно запросить через:</p>
+    <div id="timer"
+        class="text-danger fw-bold fs-4">
+        05:00
+    </div>
 </div>
+{% endif %}
+</div>
+<script>
+    function expireSendCodeCallback() {
+        const timerContainer = document.getElementById("timer-container")
+        timerContainer.remove()
+        const submitButton = document.getElementById("submit-send-verification-code")
+        submitButton.disabled = false;
+    }
+    // Запускаем таймер
+    updateTimer("timer", {{ expire_time }}, expireSendCodeCallback);
+    if (!window.timerInterval) {
+        let timerInterval;
+    }
+    timerInterval = setInterval(updateTimer, 1000, "timer",{{ expire_time }}, expireSendCodeCallback);
+    // Очистка при обновлении контента
+    document.getElementById('auth-message').addEventListener('htmx:beforeSwap', function() {
+        clearInterval(timerInterval);
+    });
+</script>
 {% endblock %}

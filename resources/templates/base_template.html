@@ -2,6 +2,23 @@
     <head>
         <title>Recipes htmx site</title>
         <script src="{{ url_for('static', path='/js/htmx.js') }}"></script>
+        <script>
+        function updateTimer(timerId, expiresAtTimestamp, callback) {
+                const timerElement = document.getElementById(timerId);
+                const expiresAt = parseFloat(expiresAtTimestamp);
+                const now = Date.now() / 1000;
+                const remaining = Math.max(0, expiresAt - now);
+                
+                if (remaining <= 0) {
+                    callback();
+                    return;
+                }
+                
+                const minutes = Math.floor(remaining / 60);
+                const seconds = Math.floor(remaining % 60);
+                timerElement.innerHTML = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+        </script>
     </head>
     <body>
         {% block page_body %}{% endblock %}

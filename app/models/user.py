@@ -26,4 +26,9 @@ class User(Base, CreatedAtMixin, TechIdMixin):
         server_default="2000-01-01 00:00:00.000+00:00",
         comment="Время отправка кода подтверждения",
     )
+    active_time: Mapped[datetime] = MappedColumn(
+        TIMESTAMP(timezone=True),
+        nullable=True,
+        comment="Время активности пользователя"
+    )
     
