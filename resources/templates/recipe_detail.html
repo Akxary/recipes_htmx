@@ -1,0 +1,10 @@
+{% extends 'base_template.html' %}
+{% block page_body %}
+<h2>Детали рецепта:</h2>
+<p>Автор: {{ recipe.user.user_email }}</p>
+<p>Рецепт: {{ recipe.description }}</p>
+<p>Дата создания: {{ recipe.created_at }}</p>
+<button hx-get="{{ url_for('index') }}" hx-target="body" hx-swap="innerHTML">
+Назад к списку рецептов
+</button>
+{% endblock  %}

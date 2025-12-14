@@ -15,7 +15,7 @@ from app.api.utils import generate_verification_code, get_current_time
 from app.models.base import get_fapi_db
 from resources.config import VERIFICATION_CODE_LIMIT
 
-router = APIRouter(prefix="/auth")
+router = APIRouter(prefix="/auth", tags=["auth"])
 templates = Jinja2Templates(directory="resources/templates")
 logger = logging.getLogger(__name__)
 

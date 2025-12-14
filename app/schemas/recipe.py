@@ -8,6 +8,7 @@ class SUserEmail(BaseModel):
 
 
 class SRecipeDemo(BaseModel):
+    id: int
     user: SUserEmail
     description: str
     created_at: datetime

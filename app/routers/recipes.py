@@ -28,6 +28,23 @@ async def index(
     )
 
 
+@router.get("/recipe/{recipe_id}")
+async def recipe_detail(
+    request: Request,
+    recipe_id: int,
+    recipe_manager: Annotated[RecipeManager, Depends(get_recipe_manager)],
+) -> HTMLResponse:
+    recipe = await recipe_manager.get_recipe_by_id(recipe_id)
+    context: dict[str, Any] = {"recipe": recipe}
+    if recipe_manager.user_manager is not None:
+        context["user_email"] = recipe_manager.user_manager.user_email
+
+    return templates.TemplateResponse(
+        request=request,
+        name="recipe_detail.html",
+        context=context,
+    )
+
 @router.post("/add")
 async def add_recipe(
     request: Request,

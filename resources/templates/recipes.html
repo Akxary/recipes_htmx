@@ -4,9 +4,11 @@
 <ul>
 {% for recipe in all_recipes %}
     <li>
+        
         <p>Автор: {{ recipe.user.user_email }}</p>
         <p>Рецепт: {{ recipe.description }}</p>
         <p>Дата создания: {{ recipe.created_at }}</p>
+        <p><a href="{{ url_for('recipe_detail', recipe_id=recipe.id) }}">Подробнее...</a></p>
     </li>
 {% endfor %}
 </ul>

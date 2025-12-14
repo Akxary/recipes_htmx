@@ -41,6 +41,12 @@ class RecipeManager:
         result = (await self.session.execute(query)).scalar_one()
         await self.session.commit()
         return result
+    
+    async def get_recipe_by_id(self, recipe_id: int) -> SRecipeDemo:
+        query = select(Recipe).where(Recipe.id == recipe_id).options(joinedload(Recipe.user))
+        result = (await self.session.execute(query)).scalar_one()
+        adapted = TypeAdapter(SRecipeDemo).validate_python(result)
+        return adapted
 
 
 def get_recipe_manager(
