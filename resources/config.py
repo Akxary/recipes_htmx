@@ -15,6 +15,10 @@ DB_URL = f"sqlite:///{DB_PATH.as_posix()}"
 SEND_CODE_LIMIT = timedelta(seconds=30)
 VERIFICATION_CODE_LIMIT = timedelta(seconds=30)
 SESSION_TIME_LIMIT = timedelta(hours=1)
+REFRESH_TOKEN_LIMIT = timedelta(days=7)
+ACCESS_TOKEN_LIMIT = timedelta(minutes=15)
 
 if __name__ == "__main__":
     print(f"{DB_URL=}")
+
+ALGORITHM = "HS256"
